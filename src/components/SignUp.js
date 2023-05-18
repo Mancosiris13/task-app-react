@@ -22,11 +22,6 @@ const SignUp = () => {
         navigate('/dashboard', { state: response.data });
       })
       .catch((error) => {
-        // if (error.response.data.errors.password.message !== undefined) {
-        //   setErrorMessage(error.response.data.errors.password.message);
-        // } else if (error.response.data.errors.age.message !== undefined) {
-        //   setErrorMessage(error.response.data.errors.age.message);
-        // }
         if (
           error.response.data.errors &&
           error.response.data.errors.age !== undefined
@@ -49,28 +44,12 @@ const SignUp = () => {
           setErrorMessage(error.response.data);
           console.log(error.response.data);
         }
-
-        // ****CUANDO AGE ES MENOR QUE 0 */
-        // console.log(error.response.data.errors.age.message);
-        // setErrorMessage('Age must be a positive number !');
-        // //****CUANDO PASSWORD  es MENOR  DE 6 CARACTERES */
-        // console.log(error.response.data.errors.password.message);
-        // setErrorMessage('Password lenght must be over 6 character');
-
-        // //****CUANDO EMAIL ESTA ASOCIADO A OTRA CUENTA */
-        // console.log(error.response.data);
-        // setErrorMessage('Email asociated to another account');
-
-        // //****CUANDO INGRESAN EMAIL MAL */
-
-        // //****CUANDO PASSWORD USA PASSWORD */
-        // console.log(error.response.data.errors.password.message);
-        // setErrorMessage('Password can not contain password word');
       });
   };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
+      {/* SIGN UP FORM*/}
       <form
         onSubmit={handleSubmit}
         className="bg-green-200 p-6 rounded-lg mx-auto max-w-md w-96"

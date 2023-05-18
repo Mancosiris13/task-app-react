@@ -26,6 +26,7 @@ const LogIn = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
+      {/* LOG IN FORM*/}
       <form
         onSubmit={handleSubmit}
         className="bg-green-200 p-6 rounded-lg w-80"

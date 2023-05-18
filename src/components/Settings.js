@@ -6,13 +6,29 @@ const Settings = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const response = location.state;
+  // console.log(response.token);
   //location.state get what we have passed to this-
   //component when we call it on the previus component using navigate()//
-
+  const headers = response
+    ? {
+        Authorization: `Bearer ${response.token}`,
+      }
+    : {};
   const [dangerZoneActivated, setDangerZoneActivated] = useState(false);
   const [deleteAccountConfirmation, setDeleteAccountConfirmation] =
     useState('');
-  console.log(deleteAccountConfirmation);
+  const [name, setName] = useState();
+  const [updateNameSucces, setUpdateNameSucces] = useState(false);
+  const [email, setEmail] = useState();
+  const [updateEmailSucces, setUpdateEmailSucces] = useState(false);
+  const [password, setPassword] = useState(undefined);
+  const [repeatPassword, setRepeatPassword] = useState(undefined);
+  const [passwordsMatchFail, setPasswordsMatchFail] = useState(false);
+  const [updatePasswordSucces, setUpdatePasswordSucces] = useState(false);
+  console.log(password);
+  console.log(repeatPassword);
+  console.log(passwordsMatchFail);
+  const [age, setAge] = useState();
 
   useEffect(() => {
     if (!response || !response.user) {
@@ -20,11 +36,19 @@ const Settings = () => {
     }
   }, [navigate, response]);
 
-  const headers = response
-    ? {
-        Authorization: `Bearer ${response.token}`,
-      }
-    : {};
+  useEffect(() => {
+    axios
+      .get('http://localhost:4000/users/me', { headers })
+      .then((response) => {
+        console.log(response.data);
+        setName(response.data.name);
+        setEmail(response.data.email);
+        setAge(response.data.age);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
 
   const handleLogOut = () => {
     axios
@@ -60,7 +84,7 @@ const Settings = () => {
         .then((response) => {
           console.log(response);
           console.log('Account Succesfully deleted');
-          navigate('/');
+          navigate('/deletedAccount');
         })
         .catch((e) => {
           console.log(e);
@@ -71,6 +95,61 @@ const Settings = () => {
   const handleReturn = () => {
     navigate('/dashboard', { state: response });
   };
+
+  const handleUpdateName = (event) => {
+    event.preventDefault();
+    axios
+      .patch('http://localhost:4000/users/me', { name }, { headers })
+      .then((response) => {
+        console.log(response);
+        setUpdateNameSucces(true);
+        setTimeout(() => {
+          setUpdateNameSucces(false);
+        }, 2500);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  const handleUpdateEmail = (event) => {
+    event.preventDefault();
+    axios
+      .patch('http://localhost:4000/users/me', { email }, { headers })
+      .then((response) => {
+        console.log(response);
+        setUpdateEmailSucces(true);
+        setTimeout(() => {
+          setUpdateEmailSucces(false);
+        }, 2500);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const handleUpdatePassword = (event) => {
+    event.preventDefault();
+    if (password === repeatPassword) {
+      axios
+        .patch('http://localhost:4000/users/me', { password }, { headers })
+        .then((response) => {
+          console.log(response);
+          setPasswordsMatchFail(false);
+          setUpdatePasswordSucces(true);
+          setTimeout(() => {
+            setUpdatePasswordSucces(false);
+          }, 3000);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else if (password !== repeatPassword) {
+      setPasswordsMatchFail(true);
+      setTimeout(() => {
+        setPasswordsMatchFail(false);
+      }, 2500);
+    }
+  };
   return (
     <>
       <div className="  min-h-screen flex flex-col justify-center items-center bg-gradient-to-r from-green-400 to-blue-500">
@@ -80,7 +159,9 @@ const Settings = () => {
             APP
           </span>
         </h1>
-
+        {/* RETURN AND CLOSE SESSIONS BUTTONS*/}
+        {/* RETURN AND CLOSE SESSIONS BUTTONS*/}
+        {/* RETURN AND CLOSE SESSIONS BUTTONS*/}
         <div className="flex flex-col items-center justify-center w-full max-w-2xl bg-white rounded-lg shadow-lg py-8 px-10 space-y-8 inline-block">
           <div className="flex flex-col md:flex-row md:justify-between w-full">
             <button
@@ -104,10 +185,131 @@ const Settings = () => {
               </button>
             </div>
           </div>
-
+          {/* UPDATE PROFILE SECTION*/}
+          {/* UPDATE PROFILE SECTION*/}
+          {/* UPDATE PROFILE SECTION*/}
+          <div className="bg-gray-100 px-4 py-8 sm:px-6 md:py-12 lg:px-8 bg-gradient-to-r from-blue-300 to-green-300 rounded-lg   ">
+            <h1 className="text-3xl font-bold mb-8">Update Profile</h1>
+            {/* UPDATE NAME FORM*/}
+            {/* UPDATE NAME FORM*/}
+            {/* UPDATE NAME FORM*/}
+            <div className="mb-12">
+              <form onSubmit={handleUpdateName} className="text-center">
+                <label
+                  htmlFor="text"
+                  className="inline-block font-medium text-gray-700"
+                >
+                  Name:
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  className="mb-4 mt-1 inline-block w-full rounded-md border-green-300 focus:border-green-500 focus:ring-green-500"
+                  defaultValue={name}
+                  onChange={(event) => setName(event.target.value)}
+                />
+                <div className="w-60">
+                  {updateNameSucces && (
+                    <p className="text-green-600 font-bold mb-2  ">
+                      Name successfully Updated
+                    </p>
+                  )}
+                </div>
+                <button
+                  type="submit"
+                  className="w-full bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600"
+                >
+                  Update Name
+                </button>
+              </form>
+            </div>
+            {/* UPDATE EMAIL FORM*/}
+            {/* UPDATE EMAIL FORM*/}
+            {/* UPDATE EMAIL FORM*/}
+            <div className="mb-12">
+              <form onSubmit={handleUpdateEmail}>
+                <label
+                  htmlFor="email"
+                  className="block font-medium text-gray-700"
+                >
+                  Email:
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  className="mb-4 mt-1 block w-full rounded-md border-green-300 focus:border-green-500 focus:ring-green-500"
+                  defaultValue={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                />
+                <div className="w-60">
+                  {updateEmailSucces && (
+                    <p className="text-green-600 font-bold mb-2 ">
+                      Email succesfully Updated
+                    </p>
+                  )}
+                </div>
+                <button
+                  type="submit"
+                  className="w-full bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600"
+                >
+                  Update Email
+                </button>
+              </form>
+            </div>
+            {/* UPDATE PASSWORD FORM*/}
+            {/* UPDATE PASSWORD FORM*/}
+            {/* UPDATE PASSWORD FORM*/}
+            <div className="mb-12">
+              <form onSubmit={handleUpdatePassword}>
+                <label
+                  htmlFor="password"
+                  className="block font-medium text-gray-700"
+                >
+                  New Password:
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  className="mb-4 mt-1 block w-full rounded-md border-blue-300 focus:border-blue-500 focus:ring-blue-500"
+                  onChange={(event) => setPassword(event.target.value)}
+                />
+                <label
+                  htmlFor="password"
+                  className="block font-medium text-gray-700"
+                >
+                  Repet New Password:
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  className="mb-4 mt-1 block w-full rounded-md border-blue-300 focus:border-blue-500 focus:ring-blue-500"
+                  onChange={(event) => setRepeatPassword(event.target.value)}
+                />
+                {passwordsMatchFail && (
+                  <p className="text-red-500">Passwords Must Match</p>
+                )}
+                <div className="w-60">
+                  {updatePasswordSucces && (
+                    <p className="text-green-600 font-bold mb-2 ">
+                      Password succesfully Updated
+                    </p>
+                  )}
+                </div>
+                <button
+                  type="submit"
+                  className="w-full bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600"
+                >
+                  Update Password
+                </button>
+              </form>
+            </div>
+          </div>
+          {/* DANGER ZONE*/}
+          {/* DANGER ZONE*/}
+          {/* DANGER ZONE*/}
           <div className="w-full border-t pt-40 ">
             <div className="flex justify-end">
-              <h1 className="text-xl font-bold text-gray-700">Danger Zone</h1>
+              <h1 className="text-3xl font-bold text-red-700">Danger Zone</h1>
             </div>
             <div className="flex justify-end mt-4">
               {dangerZoneActivated ? (
@@ -125,6 +327,9 @@ const Settings = () => {
                   Delete My Account
                 </button>
               )}
+              {/* RENDER DELETE ACCOUNT CONFIRMATION*/}
+              {/* RENDER DELETE ACCOUNT CONFIRMATION*/}
+              {/* RENDER DELETE ACCOUNT CONFIRMATION*/}
               {dangerZoneActivated && (
                 <div
                   className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative "

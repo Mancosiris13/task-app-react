@@ -12,6 +12,7 @@ import Dashboard from './components/Dashboard';
 import SignUp from './components/SignUp';
 import LogOut from './components/LogOut';
 import Settings from './components/Settings';
+import DeletedAccount from './components/DeletedAccount';
 function App() {
   return (
     <Router>
@@ -21,7 +22,8 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/logout" element={<LogOut />} />
-        <Route path="settings" element={<Settings />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/deletedAccount" element={<DeletedAccount />} />
       </Routes>
     </Router>
   );
