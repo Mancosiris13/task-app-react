@@ -4,11 +4,11 @@ import axios from 'axios';
 
 const Settings = () => {
   const API_URL = process.env.REACT_APP_URL;
-  console.log(API_URL);
+
   const navigate = useNavigate();
   const location = useLocation();
   const response = location.state;
-  // console.log(response.token);
+
   //location.state get what we have passed to this-
   //component when we call it on the previus component using navigate()//
   const headers = response
@@ -27,9 +27,7 @@ const Settings = () => {
   const [repeatPassword, setRepeatPassword] = useState(undefined);
   const [passwordsMatchFail, setPasswordsMatchFail] = useState(false);
   const [updatePasswordSucces, setUpdatePasswordSucces] = useState(false);
-  console.log(password);
-  console.log(repeatPassword);
-  console.log(passwordsMatchFail);
+
   const [age, setAge] = useState();
 
   useEffect(() => {
@@ -42,7 +40,6 @@ const Settings = () => {
     axios
       .get(`${API_URL}/users/me`, { headers })
       .then((response) => {
-        console.log(response.data);
         setName(response.data.name);
         setEmail(response.data.email);
         setAge(response.data.age);
@@ -84,8 +81,6 @@ const Settings = () => {
       axios
         .delete(`${API_URL}/users/me`, { headers })
         .then((response) => {
-          console.log(response);
-          console.log('Account Succesfully deleted');
           navigate('/deletedAccount');
         })
         .catch((e) => {
@@ -103,7 +98,6 @@ const Settings = () => {
     axios
       .patch(`${API_URL}/users/me`, { name }, { headers })
       .then((response) => {
-        console.log(response);
         setUpdateNameSucces(true);
         setTimeout(() => {
           setUpdateNameSucces(false);
@@ -118,7 +112,6 @@ const Settings = () => {
     axios
       .patch(`${API_URL}/users/me`, { email }, { headers })
       .then((response) => {
-        console.log(response);
         setUpdateEmailSucces(true);
         setTimeout(() => {
           setUpdateEmailSucces(false);
@@ -135,7 +128,6 @@ const Settings = () => {
       axios
         .patch(`${API_URL}/users/me`, { password }, { headers })
         .then((response) => {
-          console.log(response);
           setPasswordsMatchFail(false);
           setUpdatePasswordSucces(true);
           setTimeout(() => {
