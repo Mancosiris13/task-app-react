@@ -13,6 +13,18 @@ import SignUp from './components/SignUp';
 import LogOut from './components/LogOut';
 import Settings from './components/Settings';
 import DeletedAccount from './components/DeletedAccount';
+import { useState } from 'react';
+// require('dotenv').config();
+// const apiUrl = process.env.URL;
+// console.log(apiUrl);
+// import express from 'express'
+
+// require('dotenv').config();
+// console.log(process.env);
+
+// import * as dotenv from 'dotenv'; // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+// dotenv.config();
+
 function App() {
   return (
     <Router>

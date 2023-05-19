@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
+  const API_URL = process.env.REACT_APP_URL;
+  console.log(API_URL);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -16,7 +18,7 @@ const SignUp = () => {
     // Make API call to sign up user with name, email, password, and age
     // Redirect to dashboard page upon successful sign up
     axios
-      .post('http://localhost:4000/users/', { name, email, password, age })
+      .post(`${API_URL}/users/`, { name, email, password, age })
       .then((response) => {
         // console.log('this is the response', response);
         navigate('/dashboard', { state: response.data });

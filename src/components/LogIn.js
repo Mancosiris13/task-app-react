@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const LogIn = () => {
+  const API_URL = process.env.REACT_APP_URL;
+  console.log(API_URL);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -12,7 +14,7 @@ const LogIn = () => {
     event.preventDefault();
 
     axios
-      .post('http://localhost:4000/users/login', { email, password })
+      .post(`${API_URL}/users/login`, { email, password })
       .then((response) => {
         console.log(response.data);
         navigate('/dashboard', { state: response.data }); // replace "/dashboard" with the path to your desired component

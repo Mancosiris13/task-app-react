@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AiTwotoneEdit, AiFillSetting } from 'react-icons/ai';
 const Dashboard = () => {
+  const API_URL = process.env.REACT_APP_URL;
+  console.log(API_URL);
   const navigate = useNavigate();
   const location = useLocation();
   const response = location.state;
@@ -33,7 +35,7 @@ const Dashboard = () => {
       navigate('/');
     } else {
       axios
-        .get('http://localhost:4000/tasks', { headers })
+        .get(`${API_URL}/tasks`, { headers })
         .then((response) => {
           console.log('response', response.data);
           setTasks(response.data);
@@ -60,10 +62,11 @@ const Dashboard = () => {
 
   const fetchAllTasks = () => {
     axios
-      .get('http://localhost:4000/tasks', { headers })
+      .get(`${API_URL}/tasks`, { headers })
       .then((response) => {
         console.log(response.data);
         setTasks(response.data);
+        setSortByToogle(!setSortByToogle);
       })
       .catch((e) => {
         console.log(e);
@@ -72,7 +75,7 @@ const Dashboard = () => {
 
   const handleDeleteTask = (taskID) => {
     axios
-      .delete(`http://localhost:4000/tasks/${taskID}`, { headers })
+      .delete(`${API_URL}/tasks/${taskID}`, { headers })
       .then((response) => {
         console.log(response);
         setTasks(tasks.filter((task) => task._id !== taskID));
@@ -90,7 +93,7 @@ const Dashboard = () => {
     event.preventDefault();
     axios
       .post(
-        'http://localhost:4000/tasks',
+        `${API_URL}/tasks`,
         {
           description,
           completed,
@@ -118,17 +121,13 @@ const Dashboard = () => {
   const handleUpdateTask = async (taskID) => {
     ///UPDATE THE DESCRIPTION  OF THE TAKS///
     await axios
-      .patch(
-        `http://localhost:4000/tasks/${taskID}`,
-        { description },
-        { headers }
-      )
+      .patch(`${API_URL}/tasks/${taskID}`, { description }, { headers })
       .then(() => {
         setEditableTaskId(''); // Reset the editable task ID after updating
       });
     ///FETCH ALL TASKS TO BE EABLE TO RE RENDER THE TASKS WITH THE UPDATE DONE///
     await axios
-      .get('http://localhost:4000/tasks', { headers })
+      .get(`${API_URL}/tasks`, { headers })
       .then((response) => {
         console.log(response.data);
         setTasks(response.data);
@@ -140,14 +139,10 @@ const Dashboard = () => {
 
   const handleUpdateCompleted = async (taskID, completed) => {
     ///UPDATE THE STATUS ON COMPLETETION OF THE TAKS///
-    await axios.patch(
-      `http://localhost:4000/tasks/${taskID}`,
-      { completed },
-      { headers }
-    );
+    await axios.patch(`${API_URL}/tasks/${taskID}`, { completed }, { headers });
     ///FETCH ALL TASKS TO BE EABLE TO RE RENDER THE TASKS WITH THE UPDATE DONE///
     await axios
-      .get('http://localhost:4000/tasks', { headers })
+      .get(`${API_URL}/tasks`, { headers })
       .then((response) => {
         console.log(response.data);
         setTasks(response.data);
@@ -159,7 +154,7 @@ const Dashboard = () => {
 
   const handleSortCompletedTasks = () => {
     axios
-      .get('http://localhost:4000/tasks?completed=true', { headers })
+      .get(`${API_URL}/tasks?completed=true`, { headers })
       .then((response) => {
         console.log(response.data);
         setTasks(response.data);
@@ -172,7 +167,7 @@ const Dashboard = () => {
 
   const handleSortIncompletedTasks = () => {
     axios
-      .get('http://localhost:4000/tasks?completed=false', { headers })
+      .get(`${API_URL}/tasks?completed=false`, { headers })
       .then((response) => {
         console.log(response);
         console.log(response.data);
@@ -186,7 +181,7 @@ const Dashboard = () => {
 
   const handleSortAscendingOrder = () => {
     axios
-      .get('http://localhost:4000/tasks?sortBy=createdAt:asc', { headers })
+      .get(`${API_URL}/tasks?sortBy=createdAt:asc`, { headers })
       .then((response) => {
         console.log(response);
         console.log(response.data);
@@ -199,7 +194,7 @@ const Dashboard = () => {
   };
   const handleSortDescendingOrder = () => {
     axios
-      .get('http://localhost:4000/tasks?sortBy=createdAt:desc', { headers })
+      .get(`${API_URL}/tasks?sortBy=createdAt:desc`, { headers })
       .then((response) => {
         console.log(response);
         console.log(response.data);
@@ -253,9 +248,9 @@ const Dashboard = () => {
           >
             Add Task
           </button>
-          {/* FILL OUT THE TASK FORMULARY*/}
-          {/* FILL OUT THE TASK FORMULARY*/}
-          {/* FILL OUT THE TASK FORMULARY*/}
+          {/* FILL OUT THE TASK FORM*/}
+          {/* FILL OUT THE TASK FORM*/}
+          {/* FILL OUT THE TASK FORM*/}
           {toggleAddTask && (
             <form
               onSubmit={handleAddTask}

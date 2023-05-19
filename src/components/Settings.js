@@ -3,6 +3,8 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Settings = () => {
+  const API_URL = process.env.REACT_APP_URL;
+  console.log(API_URL);
   const navigate = useNavigate();
   const location = useLocation();
   const response = location.state;
@@ -38,7 +40,7 @@ const Settings = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:4000/users/me', { headers })
+      .get(`${API_URL}/users/me`, { headers })
       .then((response) => {
         console.log(response.data);
         setName(response.data.name);
@@ -52,7 +54,7 @@ const Settings = () => {
 
   const handleLogOut = () => {
     axios
-      .post('http://localhost:4000/users/logout', {}, { headers })
+      .post(`${API_URL}/users/logout`, {}, { headers })
       .then(() => {
         navigate('/logout');
       })
@@ -63,7 +65,7 @@ const Settings = () => {
 
   const handleLogOutAll = () => {
     axios
-      .post('http://localhost:4000/users/logoutAll', {}, { headers })
+      .post(`${API_URL}/users/logoutAll`, {}, { headers })
       .then(() => {
         navigate('/logout');
       })
@@ -80,7 +82,7 @@ const Settings = () => {
     event.preventDefault();
     if (deleteAccountConfirmation === 'delete my account') {
       axios
-        .delete('http://localhost:4000/users/me', { headers })
+        .delete(`${API_URL}/users/me`, { headers })
         .then((response) => {
           console.log(response);
           console.log('Account Succesfully deleted');
@@ -99,7 +101,7 @@ const Settings = () => {
   const handleUpdateName = (event) => {
     event.preventDefault();
     axios
-      .patch('http://localhost:4000/users/me', { name }, { headers })
+      .patch(`${API_URL}/users/me`, { name }, { headers })
       .then((response) => {
         console.log(response);
         setUpdateNameSucces(true);
@@ -114,7 +116,7 @@ const Settings = () => {
   const handleUpdateEmail = (event) => {
     event.preventDefault();
     axios
-      .patch('http://localhost:4000/users/me', { email }, { headers })
+      .patch(`${API_URL}/users/me`, { email }, { headers })
       .then((response) => {
         console.log(response);
         setUpdateEmailSucces(true);
@@ -131,7 +133,7 @@ const Settings = () => {
     event.preventDefault();
     if (password === repeatPassword) {
       axios
-        .patch('http://localhost:4000/users/me', { password }, { headers })
+        .patch(`${API_URL}/users/me`, { password }, { headers })
         .then((response) => {
           console.log(response);
           setPasswordsMatchFail(false);

@@ -5,7 +5,7 @@ const DeletedAccount = () => {
   const navigate = useNavigate();
   setTimeout(() => {
     navigate('/');
-  }, 3000);
+  }, 2000);
   return (
     <div className="flex flex-col  h-screen">
       <Link to={'/'}>
