@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const LogIn = () => {
   const API_URL = process.env.REACT_APP_URL;
-  console.log(API_URL);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -16,12 +16,10 @@ const LogIn = () => {
     axios
       .post(`${API_URL}/users/login`, { email, password })
       .then((response) => {
-        console.log(response.data);
         navigate('/dashboard', { state: response.data }); // replace "/dashboard" with the path to your desired component
       })
 
       .catch((error) => {
-        console.error(error);
         setErrorMessage('Invalid Username or Password');
       });
   };

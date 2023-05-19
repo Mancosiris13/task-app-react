@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const API_URL = process.env.REACT_APP_URL;
-  console.log(API_URL);
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,7 +20,6 @@ const SignUp = () => {
     axios
       .post(`${API_URL}/users/`, { name, email, password, age })
       .then((response) => {
-        // console.log('this is the response', response);
         navigate('/dashboard', { state: response.data });
       })
       .catch((error) => {
@@ -29,22 +28,18 @@ const SignUp = () => {
           error.response.data.errors.age !== undefined
         ) {
           setErrorMessage(error.response.data.errors.age.message);
-          console.log(error.response.data.errors.age.message);
         } else if (
           error.response.data.errors &&
           error.response.data.errors.password !== undefined
         ) {
           setErrorMessage(error.response.data.errors.password.message);
-          console.log(error.response.data.errors.password.message);
         } else if (
           error.response.data.errors &&
           error.response.data.errors.email !== undefined
         ) {
           setErrorMessage(error.response.data.errors.email.message);
-          console.log(error.response.data.errors.email.message);
         } else {
           setErrorMessage(error.response.data);
-          console.log(error.response.data);
         }
       });
   };

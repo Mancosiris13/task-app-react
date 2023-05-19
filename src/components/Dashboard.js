@@ -4,27 +4,23 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { AiTwotoneEdit, AiFillSetting } from 'react-icons/ai';
 const Dashboard = () => {
   const API_URL = process.env.REACT_APP_URL;
-  console.log(API_URL);
+
   const navigate = useNavigate();
   const location = useLocation();
   const response = location.state;
-  console.log(response);
+
   //location.state get what we have passed to this-
   //component when we call it on the previus component using navigate()//
 
   const [tasks, setTasks] = useState([]);
   const [toggleAddTask, setToggleAddTask] = useState(false);
   const [description, setNewTaskDescription] = useState('');
-  console.log(description);
 
   const [completed, setNewTaskCompleted] = useState(false);
-  const [editable, setEditable] = useState(false);
+
   const [sortByToggle, setSortByToogle] = useState(false);
 
-  const [showShortByButton, setShowShortByButton] = useState(false);
-
   const [editableTaskId, setEditableTaskId] = useState('');
-  console.log(editable);
 
   const handleNavigateSettings = () => {
     navigate('/settings', { state: response });
@@ -37,9 +33,7 @@ const Dashboard = () => {
       axios
         .get(`${API_URL}/tasks`, { headers })
         .then((response) => {
-          console.log('response', response.data);
           setTasks(response.data);
-          console.log('tasks', tasks);
         })
         .catch((e) => {
           console.log(e);
@@ -47,9 +41,7 @@ const Dashboard = () => {
     }
   }, []); // empty dependency array to ensure this effect runs only once
 
-  useEffect(() => {
-    console.log('tasks from new useEffect', tasks);
-  }, [tasks]);
+  useEffect(() => {}, [tasks]);
   if (!response || !response.user) {
     return null;
   }
@@ -64,7 +56,6 @@ const Dashboard = () => {
     axios
       .get(`${API_URL}/tasks`, { headers })
       .then((response) => {
-        console.log(response.data);
         setTasks(response.data);
         setSortByToogle(!setSortByToogle);
       })
@@ -77,7 +68,6 @@ const Dashboard = () => {
     axios
       .delete(`${API_URL}/tasks/${taskID}`, { headers })
       .then((response) => {
-        console.log(response);
         setTasks(tasks.filter((task) => task._id !== taskID));
       })
       .catch((e) => {
@@ -101,7 +91,6 @@ const Dashboard = () => {
         { headers }
       )
       .then((response) => {
-        console.log(response);
         setTasks([...tasks, response.data]);
       })
       .catch((e) => {
@@ -110,7 +99,6 @@ const Dashboard = () => {
   };
 
   const handleEditTask = (taskID) => {
-    console.log(taskID);
     setEditableTaskId(taskID);
   };
 
@@ -129,7 +117,6 @@ const Dashboard = () => {
     await axios
       .get(`${API_URL}/tasks`, { headers })
       .then((response) => {
-        console.log(response.data);
         setTasks(response.data);
       })
       .catch((e) => {
@@ -144,7 +131,6 @@ const Dashboard = () => {
     await axios
       .get(`${API_URL}/tasks`, { headers })
       .then((response) => {
-        console.log(response.data);
         setTasks(response.data);
       })
       .catch((e) => {
@@ -156,7 +142,6 @@ const Dashboard = () => {
     axios
       .get(`${API_URL}/tasks?completed=true`, { headers })
       .then((response) => {
-        console.log(response.data);
         setTasks(response.data);
         setSortByToogle(!sortByToggle);
       })
@@ -169,8 +154,6 @@ const Dashboard = () => {
     axios
       .get(`${API_URL}/tasks?completed=false`, { headers })
       .then((response) => {
-        console.log(response);
-        console.log(response.data);
         setTasks(response.data);
         setSortByToogle(!sortByToggle);
       })
@@ -183,8 +166,6 @@ const Dashboard = () => {
     axios
       .get(`${API_URL}/tasks?sortBy=createdAt:asc`, { headers })
       .then((response) => {
-        console.log(response);
-        console.log(response.data);
         setTasks(response.data);
         setSortByToogle(!sortByToggle);
       })
@@ -196,8 +177,6 @@ const Dashboard = () => {
     axios
       .get(`${API_URL}/tasks?sortBy=createdAt:desc`, { headers })
       .then((response) => {
-        console.log(response);
-        console.log(response.data);
         setTasks(response.data);
         setSortByToogle(!sortByToggle);
       })
