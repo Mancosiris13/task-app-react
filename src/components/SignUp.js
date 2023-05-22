@@ -45,77 +45,85 @@ const SignUp = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      {/* SIGN UP FORM*/}
-      <form
-        onSubmit={handleSubmit}
-        className="bg-green-200 p-6 rounded-lg mx-auto max-w-md w-96"
-      >
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="name">
-            Name:
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="name"
-            type="text"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="email">
-            Email:
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="email"
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 font-bold mb-2"
-            htmlFor="password"
-          >
-            Password:
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="password"
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </div>
-        <div className="mb-6">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="age">
-            Age:
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="age"
-            type="number"
-            value={age}
-            onChange={(event) => setAge(event.target.value)}
-          />
-        </div>
-        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-        <button
-          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow w-full mb-3"
-          type="submit"
+    <div className=" pt-6 min-h-screen flex flex-col justify-center items-center bg-gradient-to-r from-green-400 to-blue-500">
+      <div className="flex flex-col items-center justify-center h-screen">
+        {/* SIGN UP FORM*/}
+        <form
+          onSubmit={handleSubmit}
+          className="bg-green-200 p-6 rounded-lg mx-auto max-w-md w-96"
         >
-          Sign Up
-        </button>
-        <p className="text-gray-700 text-sm mb-2">
-          Already have an account?{' '}
-          <Link to={'/users/login'} className="text-green-800 font-semibold ">
-            Log In
-          </Link>
-        </p>
-      </form>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 font-bold mb-2"
+              htmlFor="name"
+            >
+              Name:
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="name"
+              type="text"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 font-bold mb-2"
+              htmlFor="email"
+            >
+              Email:
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="email"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 font-bold mb-2"
+              htmlFor="password"
+            >
+              Password:
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="password"
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+          </div>
+          <div className="mb-6">
+            <label className="block text-gray-700 font-bold mb-2" htmlFor="age">
+              Age:
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="age"
+              type="number"
+              value={age}
+              onChange={(event) => setAge(event.target.value)}
+            />
+          </div>
+          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+          <button
+            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow w-full mb-3"
+            type="submit"
+          >
+            Sign Up
+          </button>
+          <p className="text-gray-700 text-sm mb-2">
+            Already have an account?{' '}
+            <Link to={'/users/login'} className="text-green-800 font-semibold ">
+              Log In
+            </Link>
+          </p>
+        </form>
+      </div>
     </div>
   );
 };
