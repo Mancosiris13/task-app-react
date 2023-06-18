@@ -18,11 +18,13 @@ const SignUp = () => {
     // Make API call to sign up user with name, email, password, and age
     // Redirect to dashboard page upon successful sign up
     axios
-      .post(`${API_URL}/users/`, { name, email, password, age })
+      .post(`${API_URL}/users`, { name, email, password, age })
       .then((response) => {
+        console.log(response);
         navigate('/dashboard', { state: response.data });
       })
       .catch((error) => {
+        console.log(error);
         if (
           error.response.data.errors &&
           error.response.data.errors.age !== undefined

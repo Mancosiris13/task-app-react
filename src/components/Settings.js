@@ -220,7 +220,7 @@ const Settings = () => {
             {/* UPDATE EMAIL FORM*/}
             {/* UPDATE EMAIL FORM*/}
             {/* UPDATE EMAIL FORM*/}
-            <div className="mb-12">
+            {/* <div className="mb-12">
               <form onSubmit={handleUpdateEmail}>
                 <label
                   htmlFor="email"
@@ -249,7 +249,7 @@ const Settings = () => {
                   Update Email
                 </button>
               </form>
-            </div>
+            </div> */}
             {/* UPDATE PASSWORD FORM*/}
             {/* UPDATE PASSWORD FORM*/}
             {/* UPDATE PASSWORD FORM*/}
